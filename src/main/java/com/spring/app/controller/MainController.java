@@ -4,13 +4,11 @@ import com.spring.app.dto.UserDto;
 import com.spring.app.entity.User;
 import com.spring.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -42,6 +40,14 @@ public class MainController {
     }
 
 
+    @GetMapping("/welcomepage")
+    public String welcomePage(){
+//        model.addAttribute("name",name);
+        return "welcomepage";
+    }
+
+
+
 
     // handler method to handle login request
     @GetMapping("/login")
@@ -66,7 +72,9 @@ public class MainController {
         User existingUser = userService.userExist(userDto.getEmail(), userDto.getPassword());
 
         if (existingUser != null && existingUser.getEmail() != result.getFieldValue("email").toString()) {
-            return "redirect:/index";
+            model.addAttribute("name",  existingUser.getUserName());
+
+            return "/welcomepage";
         }
 
         else {

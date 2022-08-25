@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
+        //user.setPassword(userDto.getPassword());
         user.setPhone(userDto.getPhone());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.findByEmail(email);
         Boolean isAuth = false;
-        if(user.getPassword() !=null && !user.getPassword().isEmpty())
+        if( user != null && user.getPassword() !=null && !user.getPassword().isEmpty())
         {
             isAuth = passwordEncoder.matches(Password,user.getPassword());
         }
